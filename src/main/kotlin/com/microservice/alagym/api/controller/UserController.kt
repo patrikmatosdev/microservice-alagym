@@ -2,6 +2,7 @@ package com.microservice.alagym.api.controller
 
 import com.microservice.alagym.api.model.User
 import com.microservice.alagym.api.repository.UserRepository
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -18,5 +19,16 @@ class UserController(
     @GetMapping
     fun list(): List<User> {
         return repo.findAll()
+    }
+
+    @GetMapping("/{id}")
+    fun findById(@PathVariable id: Long): ResponseEntity<User> {
+        val user = repo.findById(id)
+
+        return if (user.isPresent) {
+            ResponseEntity.ok(user.get())
+        } else {
+            ResponseEntity.notFound().build()
+        }
     }
 }
