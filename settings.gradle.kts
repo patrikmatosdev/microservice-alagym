@@ -1,7 +1,1 @@
-rootProject.name = "alagym"
-
-dependencyResolutionManagement {
-    repositories {
-        mavenCentral()
-    }
-}
+rootProject.name = "api"
