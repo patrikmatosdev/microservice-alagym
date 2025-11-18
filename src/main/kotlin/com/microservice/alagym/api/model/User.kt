@@ -9,12 +9,12 @@ data class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
-    val name: String,
-    val type: String,
-    val email: String,
-    val city: String,
-    val country: String,
-    val phone: String,
-    val document: String,
-    val address: String,
+    var name: String,
+    var type: String,
+    var email: String,
+    var city: String,
+    var country: String,
+    var phone: String,
+    var document: String,
+    var address: String,
 )

@@ -1,9 +1,11 @@
 package com.microservice.alagym.api.controller
 
-import com.microservice.alagym.api.model.User
-import com.microservice.alagym.api.repository.UserRepository
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import com.microservice.alagym.api.model.User
+import com.microservice.alagym.api.repository.UserRepository
+import com.microservice.alagym.api.dto.UserUpdateRequest
+import com.microservice.alagym.api.dto.UserResponse
 
 @RestController
 @RequestMapping("/users")
@@ -40,6 +42,30 @@ class UserController(
         } else {
             ResponseEntity.notFound().build()    // 404 Not Found
         }
+    }
+
+    @PutMapping("/{id}")
+    fun update(
+        @PathVariable id: Long,
+        @RequestBody request: UserUpdateRequest
+    ): ResponseEntity<UserResponse> {
+
+        val user = repo.findById(id).orElseThrow {
+            RuntimeException("Usuário não encontrado")
+        }
+
+        request.name?.let { user.name = it }
+        request.email?.let { user.email = it }
+        request.phone?.let { user.phone = it }
+        request.address?.let { user.address = it }
+        request.document?.let { user.document = it }
+        request.type?.let { user.type = it }
+        request.city?.let { user.city = it }
+        request.country?.let { user.country = it }
+
+        val updated = repo.save(user)
+
+        return ResponseEntity.ok(UserResponse.fromEntity(updated))
     }
 
 }
