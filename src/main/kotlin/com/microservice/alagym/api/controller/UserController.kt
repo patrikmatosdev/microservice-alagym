@@ -31,4 +31,15 @@ class UserController(
             ResponseEntity.notFound().build()
         }
     }
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable id: Long): ResponseEntity<Void> {
+        return if (repo.existsById(id)) {
+            repo.deleteById(id)
+            ResponseEntity.noContent().build()   // 204 No Content
+        } else {
+            ResponseEntity.notFound().build()    // 404 Not Found
+        }
+    }
+
 }
