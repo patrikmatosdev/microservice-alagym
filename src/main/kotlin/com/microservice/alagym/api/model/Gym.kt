@@ -4,20 +4,21 @@ import jakarta.persistence.*
 import java.util.*
 
 @Entity
-@Table(name = "users")
-data class User(
+@Table(name = "gyms")
+data class Gym(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
+
     var name: String,
-    var type: String,
-    var email: String,
-    var city: String,
-    var country: String,
+    var address: String,
     var phone: String,
+    var openingHour: String,
+    var closingHour: String,
+    var image: String,
+    var manager: String,
 
     @Column(unique = true)
-    var document: String,
+    var document: String
 
-    var address: String,
 )

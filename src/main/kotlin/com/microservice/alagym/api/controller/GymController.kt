@@ -1,0 +1,22 @@
+package com.microservice.alagym.api.controller
+
+import org.springframework.web.bind.annotation.*
+import com.microservice.alagym.api.model.Gym
+import com.microservice.alagym.api.repository.GymRepository
+
+
+@RestController
+@RequestMapping("/gym")
+class GymController(
+    private val repo: GymRepository
+) {
+    @GetMapping("/all")
+    fun list(): List<Gym> {
+        return repo.findAll()
+    }
+
+    @PostMapping("/create")
+    fun create(@RequestBody gym: Gym): Gym {
+        return repo.save(gym)
+    }
+}

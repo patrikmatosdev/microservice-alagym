@@ -13,7 +13,7 @@ class UserController(
     private val repo: UserRepository
 ) {
 
-    @PostMapping
+    @PostMapping("/create")
     fun create(@RequestBody user: User): User {
         return repo.save(user)
     }
@@ -29,6 +29,17 @@ class UserController(
 
         return if (user.isPresent) {
             ResponseEntity.ok(user.get())
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @GetMapping("/document/{document}")
+    fun findByDocument(@PathVariable document: String): ResponseEntity<User> {
+        val user = repo.findByDocument(document)
+
+        return if (user != null) {
+            ResponseEntity.ok(user)
         } else {
             ResponseEntity.notFound().build()
         }
